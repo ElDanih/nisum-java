@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["name", "email", "password", "phones"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "password": {
+      "type": "string",
+      "pattern": "^(?=.*[A-Z])(?=.*[0-9])[A-Za-z\\d]{8,}$"
+    },
+    "phones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["number", "citycode", "contrycode"],
+        "properties": {
+          "number": { "type": "string" },
+          "citycode": { "type": "string" },
+          "contrycode": { "type": "string" }
+        }
+      }
+    }
+  }
+}

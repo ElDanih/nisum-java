@@ -11,6 +11,16 @@ spring:
       path: "/h2"
   profiles:
     include: null
+  datasource:
+    url: "jdbc:h2:mem:nisumdb"
+    username: "sa"
+    password: "pass"
+    driverClassName: "org.h2.Driver"
+  jpa:
+    databasePlatform: "org.hibernate.dialect.H2Dialect"
+    show-sql: true
+    hibernate:
+      ddl-auto: update
 management:
   endpoints:
     web:
@@ -22,3 +32,8 @@ management:
         enabled: true
 cors:
   allowed-origins: "http://localhost:4200,http://localhost:8080"
+logging:
+  level:
+    #com.zaxxer.hikari: DEBUG
+    org.hibernate: INFO
+
