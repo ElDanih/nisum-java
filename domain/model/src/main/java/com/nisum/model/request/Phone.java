@@ -1,4 +1,4 @@
-package com.nisum.model.dto;
+package com.nisum.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class PhoneDto {
+public class Phone {
     String number;
     String citycode;
     String contrycode;

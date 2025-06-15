@@ -1,4 +1,4 @@
-package com.nisum.model.dto;
+package com.nisum.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +11,9 @@ import java.util.List;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestDto {
+public class Request {
     public String name;
     public String email;
     public String password;
-    public List<PhoneDto> phones;
+    public List<Phone> phones;
 }

@@ -13,14 +13,16 @@ spring:
     include: null
   datasource:
     url: "jdbc:h2:mem:nisumdb"
+    #url: "jdbc:h2:file:./data/demo_db"
     username: "sa"
-    password: "pass"
+    password: ""
     driverClassName: "org.h2.Driver"
   jpa:
     databasePlatform: "org.hibernate.dialect.H2Dialect"
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
 management:
   endpoints:
     web:

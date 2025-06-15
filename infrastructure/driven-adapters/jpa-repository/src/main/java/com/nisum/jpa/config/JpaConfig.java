@@ -34,25 +34,4 @@ public class JpaConfig {
         config.setDriverClassName(driverClass);
         return new HikariDataSource(config);
     }
-
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-            DataSource dataSource,
-            @Value("${spring.jpa.databasePlatform}") String dialect,
-            @Value("${spring.jpa.hibernate.ddl-auto}") String ddlAuto) {
-        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource);
-        em.setPackagesToScan("com.nisum.jpa");
-
-        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        em.setJpaVendorAdapter(vendorAdapter);
-
-        //Properties properties = new Properties();
-        //properties.setProperty("hibernate.dialect", dialect);
-        //properties.setProperty("hibernate.hbm2ddl.auto", "update"); // TODO: remove this for non auto create schema
-        ////properties.setProperty("hibernate.ddl-auto", "update"); // TODO: remove this for non auto create schema
-        //em.setJpaProperties(properties);
-
-        return em;
-    }
 }
