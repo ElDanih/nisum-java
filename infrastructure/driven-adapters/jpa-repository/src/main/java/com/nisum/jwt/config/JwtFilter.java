@@ -77,12 +77,12 @@ public class JwtFilter extends UsernamePasswordAuthenticationFilter {
                 .compact();
 
         response.addHeader(HEADER_AUTHORIZATION, PREFIX_TOKEN + token);
-        /*Map<String, String> body = Map.of(
+        Map<String, String> body = Map.of(
                 "token", token,
                 "username", username,
                 "mensaje", "Autenticacion exitosa"
-        );*/
-        Map<String, String> body = Map.of("mensaje", "Autenticacion exitosa");
+        );
+        //Map<String, String> body = Map.of("mensaje", "Autenticacion exitosa");
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_OK);

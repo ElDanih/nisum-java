@@ -24,12 +24,6 @@ public class ApiRest {
 
     private final RegisterUseCase registerUseCase;
 
-    @GetMapping(path = "/path")
-    public String commandName() {
-
-        return "Hello world!";
-    }
-
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, path = "/register")
     public ResponseEntity<?> register(@RequestBody JsonNode body) {
         jsonSchemaValidator.validateWithJsonSchema(body);
