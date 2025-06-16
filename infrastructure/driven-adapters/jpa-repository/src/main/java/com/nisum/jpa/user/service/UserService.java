@@ -3,25 +3,23 @@ package com.nisum.jpa.user.service;
 import com.nisum.jpa.phone.data.PhoneData;
 import com.nisum.jpa.user.data.UserData;
 import com.nisum.jpa.user.repository.UserRepository;
+import com.nisum.jwt.JwtService;
+import com.nisum.model.login.Login;
 import com.nisum.model.request.Request;
 import com.nisum.model.request.gateway.RequestGateway;
 import com.nisum.model.response.Response;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 public class UserService implements RequestGateway {
 
     private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     @Override
     public Response register(Request request) {
-
-        if(userRepository.existsByEmail(request.getEmail())) {
-            throw new IllegalArgumentException("Email already exists");
-        }
 
         UserData userData = userRepository.save(UserData.builder()
                 .name(request.getName())
@@ -30,7 +28,7 @@ public class UserService implements RequestGateway {
                 .created(LocalDateTime.now())
                 .modified(LocalDateTime.now())
                 .lastLogin(LocalDateTime.now())
-                .token(UUID.randomUUID().toString())
+                .token(jwtService.getToken(request))
                 .isActive(true)
                 .phones(request.getPhones().stream().map(phone ->
                                 PhoneData.builder()
@@ -55,4 +53,11 @@ public class UserService implements RequestGateway {
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
+
+    @Override
+    public Response login(Login login) {
+        return null;
+    }
+
+
 }

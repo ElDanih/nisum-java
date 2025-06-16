@@ -2,11 +2,10 @@ package com.nisum.api;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nisum.api.config.util.JsonSchemaValidator;
+import com.nisum.model.login.Login;
 import com.nisum.model.request.Request;
 import com.nisum.usecase.request.RegisterUseCase;
-import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,31 +14,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class ApiRest {
 
     private final JsonSchemaValidator jsonSchemaValidator;
     private final ObjectMapper objectMapper;
     private static final String MESSAGE = "mensaje";
-    private static final String EMAIL_ALREADY_EXISTS = "El correo ya esta registrado\"";
+    private static final String EMAIL_ALREADY_EXISTS = "El correo ya esta registrado";
 
     private final RegisterUseCase registerUseCase;
 
-    @GetMapping(path = "/usecase/path")
+    @GetMapping(path = "/path")
     public String commandName() {
 
         return "Hello world!";
     }
 
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, path = "/login")
+    public ResponseEntity<?> login(@RequestBody Login body) {
+        return null;
+    }
+
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, path = "/register")
     public ResponseEntity<?> register(@RequestBody JsonNode body) {
         jsonSchemaValidator.validateWithJsonSchema(body);
         Request request = objectMapper.convertValue(body, Request.class);
-
         if(registerUseCase.existsByEmail(request.getEmail())) {
-            return new ResponseEntity<>(Map.of(MESSAGE, EMAIL_ALREADY_EXISTS), HttpStatus.CONFLICT);        }
+            return new ResponseEntity<>(Map.of(MESSAGE, EMAIL_ALREADY_EXISTS), HttpStatus.CONFLICT);
+        }
         return ResponseEntity.ok(registerUseCase.register(request));
     }
+
+
 
 }
