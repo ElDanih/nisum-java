@@ -13,7 +13,6 @@ spring:
     include: null
   datasource:
     url: "jdbc:h2:mem:nisumdb"
-    #url: "jdbc:h2:file:./data/demo_db"
     username: "sa"
     password: ""
     driverClassName: "org.h2.Driver"
@@ -34,8 +33,7 @@ management:
         enabled: true
 cors:
   allowed-origins: "http://localhost:4200,http://localhost:8080"
-logging:
-  level:
-    #com.zaxxer.hikari: DEBUG
-    org.hibernate: INFO
+#logging:
+#  level:
+#    org.hibernate: INFO
 

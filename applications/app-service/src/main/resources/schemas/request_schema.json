@@ -9,7 +9,9 @@
     },
     "email": {
       "type": "string",
-      "format": "email"
+        "minLength": 8,
+      "format": "email",
+      "pattern": "^[A-Za-z0-9._+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
     },
     "password": {
       "type": "string",

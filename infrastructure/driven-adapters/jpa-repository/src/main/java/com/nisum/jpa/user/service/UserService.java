@@ -1,44 +1,44 @@
 package com.nisum.jpa.user.service;
 
 import com.nisum.jpa.phone.data.PhoneData;
+import com.nisum.jpa.user.data.Role;
 import com.nisum.jpa.user.data.UserData;
 import com.nisum.jpa.user.repository.UserRepository;
+import com.nisum.jwt.service.JwtService;
 import com.nisum.model.request.Request;
 import com.nisum.model.request.gateway.RequestGateway;
 import com.nisum.model.response.Response;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 public class UserService implements RequestGateway {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @Override
     public Response register(Request request) {
 
-        if(userRepository.existsByEmail(request.getEmail())) {
-            throw new IllegalArgumentException("Email already exists");
-        }
-
         UserData userData = userRepository.save(UserData.builder()
                 .name(request.getName())
-                .email(request.getEmail())
-                .password(request.getPassword())
+                .username(request.getUsername())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .created(LocalDateTime.now())
                 .modified(LocalDateTime.now())
                 .lastLogin(LocalDateTime.now())
-                .token(UUID.randomUUID().toString())
-                .isActive(true)
+                .role(Role.USER)
+                .token(jwtService.getToken(request))
                 .phones(request.getPhones().stream().map(phone ->
-                                PhoneData.builder()
-                                        .number(phone.getNumber())
-                                        .citycode(phone.getCitycode())
-                                        .contrycode(phone.getContrycode())
-                                        .build()
-                        ).toList())
+                        PhoneData.builder()
+                                .number(phone.getNumber())
+                                .citycode(phone.getCitycode())
+                                .contrycode(phone.getContrycode())
+                                .build()
+                ).toList())
                 .build());
         return Response.builder()
                 .id(userData.getId())
@@ -53,6 +53,6 @@ public class UserService implements RequestGateway {
 
     @Override
     public boolean existsByEmail(String email) {
-        return userRepository.existsByEmail(email);
+        return userRepository.existsByUsername(email);
     }
 }

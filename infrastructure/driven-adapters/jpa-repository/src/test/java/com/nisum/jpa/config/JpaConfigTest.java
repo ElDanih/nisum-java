@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
 import javax.sql.DataSource;
 
@@ -20,7 +19,7 @@ class JpaConfigTest {
     @Mock
     DataSource dataSource;
 
-    private DBSecret dbSecretUnderTest;
+    private DBCredential dbSecretUnderTest;
     private JpaConfig jpaConfigUnderTest;
 
     @BeforeEach
@@ -29,7 +28,7 @@ class JpaConfigTest {
 
         jpaConfigUnderTest = new JpaConfig();
 
-        dbSecretUnderTest = DBSecret.builder()
+        dbSecretUnderTest = DBCredential.builder()
                 .password("sa")
                 .username("sa")
                 .url("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1")
@@ -45,7 +44,7 @@ class JpaConfigTest {
         when(env.getProperty("spring.datasource.username")).thenReturn("sa");
         when(env.getProperty("spring.datasource.password")).thenReturn("sa");
 
-        DBSecret secretResult = jpaConfigUnderTest.dbSecret(env);
+        DBCredential secretResult = jpaConfigUnderTest.dbSecret(env);
 
         assertEquals(dbSecretUnderTest.getUrl(), secretResult.getUrl());
         assertEquals(dbSecretUnderTest.getUsername(), secretResult.getUsername());

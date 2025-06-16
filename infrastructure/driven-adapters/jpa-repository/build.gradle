@@ -3,8 +3,15 @@ dependencies {
 
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.reactivecommons.utils:object-mapper-api:0.1.0'
 
     runtimeOnly 'com.h2database:h2' // TODO: remove this to use real database
-    testImplementation 'org.reactivecommons.utils:object-mapper:0.1.0'
+
+    implementation "org.springframework.security:spring-security-core:6.5.0"
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.19.0")
+
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'jakarta.servlet:jakarta.servlet-api:6.0.0'
 }

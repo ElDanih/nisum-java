@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
@@ -13,7 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Request {
     public String name;
-    public String email;
+    @JsonProperty("email")
+    public String username;
     public String password;
     public List<Phone> phones;
 }

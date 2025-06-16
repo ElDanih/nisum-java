@@ -8,10 +8,10 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "phones", schema = "public")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "phones")
 public class PhoneData {
     @Id
     @GeneratedValue
