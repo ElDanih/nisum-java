@@ -50,6 +50,7 @@ public class UserData {
     private List<PhoneData> phones = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     Role role;
+
     @PrePersist
     public void prePersist() {
         this.isActive = true;

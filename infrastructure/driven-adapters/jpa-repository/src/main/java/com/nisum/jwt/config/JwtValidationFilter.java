@@ -1,6 +1,8 @@
 package com.nisum.jwt.config;
 
 
+import com.nisum.jpa.user.repository.UserRepository;
+import com.nisum.jpa.user.service.UserService;
 import com.nisum.model.exception.ErrorCode;
 import com.nisum.model.exception.RequestException;
 import io.jsonwebtoken.Claims;
@@ -9,6 +11,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,12 +25,14 @@ import java.util.Objects;
 
 import static com.nisum.jwt.config.TokenResources.*;
 
+
 public class JwtValidationFilter extends BasicAuthenticationFilter {
 
+    private final UserService userService;
 
-
-    public JwtValidationFilter(AuthenticationManager authenticationManager) {
+    public JwtValidationFilter(AuthenticationManager authenticationManager, UserService userService) {
         super(authenticationManager);
+        this.userService = userService;
     }
 
     @Override
@@ -52,10 +57,14 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(username, null, authorities);
 
+
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             chain.doFilter(request, response);
+
+            //Actualizar el último inicio de sesión del usuario
+            userService.updateLastLogin(username);
+
         } catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT token");
             throw new RequestException(ErrorCode.ERROR_401.getErrorCode(), ErrorCode.ERROR_401.getErrorMessage()) ;
         }
 

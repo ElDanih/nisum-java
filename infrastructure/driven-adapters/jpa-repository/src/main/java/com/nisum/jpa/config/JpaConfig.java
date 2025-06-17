@@ -9,9 +9,12 @@ import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 @Configuration
 public class JpaConfig {
 
+    //h2
     @Bean
     public DBCredential dbSecret(Environment env) {
         return DBCredential.builder()
@@ -30,4 +33,19 @@ public class JpaConfig {
         config.setDriverClassName(driverClass);
         return new HikariDataSource(config);
     }
+
+    //CONEXION DB POSTGRESQL
+   /* @Bean
+    public DataSource dataSource() {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
+        config.setUsername("postgres");
+        config.setPassword("admin");
+        config.setSchema("nisum");
+        config.setDriverClassName("org.postgresql.Driver");
+        config.setMaximumPoolSize(10); // Replace with your max pool size
+        config.setMinimumIdle(5); // Replace with your min pool size
+        config.setIdleTimeout(SECONDS.toMillis(300000)); // Replace with your max time live in ms
+        return new HikariDataSource(config);
+    }*/
 }

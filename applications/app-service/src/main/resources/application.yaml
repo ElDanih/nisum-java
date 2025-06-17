@@ -22,6 +22,15 @@ spring:
     hibernate:
       ddl-auto: create-drop
     defer-datasource-initialization: true
+  #PostgreSQL configuration
+  #datasource:
+  #  driverClassName: org.postgresql.Driver
+  #jpa:
+  #  #databasePlatform: "org.hibernate.dialect.H2Dialect"
+  #  hibernate:
+  #    ddl-auto: create-drop
+  #  show-sql: true
+
 management:
   endpoints:
     web:

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class ApiRest {
 
@@ -24,7 +24,7 @@ public class ApiRest {
 
     private final RegisterUseCase registerUseCase;
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, path = "/register")
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, path = "/auth/register")
     public ResponseEntity<?> register(@RequestBody JsonNode body) {
         jsonSchemaValidator.validateWithJsonSchema(body);
         Request request = objectMapper.convertValue(body, Request.class);
@@ -33,7 +33,4 @@ public class ApiRest {
             return new ResponseEntity<>(Map.of(MESSAGE, EMAIL_ALREADY_EXISTS), HttpStatus.CONFLICT);        }
         return ResponseEntity.ok(registerUseCase.register(request));
     }
-
-
-
 }

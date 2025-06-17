@@ -1,8 +1,7 @@
-package com.nisum.config;
+package com.nisum.jwt.config;
 
 
-import com.nisum.jwt.config.JwtFilter;
-import com.nisum.jwt.config.JwtValidationFilter;
+import com.nisum.jpa.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final UserService userService;
 
     @Bean
     AuthenticationManager authenticationManager() throws Exception {
@@ -34,8 +34,8 @@ public class SecurityConfig {
                         .requestMatchers("/actuator/**").permitAll()
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
-                .addFilter(new JwtFilter(authenticationManager()))
-                .addFilter(new JwtValidationFilter(authenticationManager()))
+                .addFilter(new JwtFilter(authenticationManager(), userService))
+                .addFilter(new JwtValidationFilter(authenticationManager(), userService))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }

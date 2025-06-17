@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nisum.jpa.user.data.UserData;
+import com.nisum.jpa.user.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
@@ -18,7 +19,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
@@ -30,6 +30,7 @@ import static com.nisum.jwt.config.TokenResources.*;
 public class JwtFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
+    private final UserService userService;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
@@ -52,6 +53,8 @@ public class JwtFilter extends UsernamePasswordAuthenticationFilter {
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(username, password);
+
+        userService.updateLastLogin(username);
 
         return authenticationManager.authenticate(authenticationToken);
     }
