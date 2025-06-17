@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping(value = "/api/v1", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
@@ -24,9 +26,10 @@ public class ApiRestWithAuth {
     public ResponseEntity<?> inactivateUser(@RequestBody Email email) {
         boolean inactivated = registerUseCase.inactivateUserByEmail(email.getEmail());
         if (inactivated) {
-            return new ResponseEntity<>("Usuario desactivado", HttpStatus.OK);
+            return new ResponseEntity<>(Map.of("mensaje","Usuario desactivado"), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("No fue posible desactivar el usuario", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Map.of("mensaje","No fue posible desactivar el usuario"),
+                    HttpStatus.NOT_FOUND);
         }
 
     }
