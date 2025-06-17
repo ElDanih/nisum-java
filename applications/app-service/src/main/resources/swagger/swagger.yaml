@@ -103,6 +103,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/LivenessResponse'
 
+  /login:
+    post:
+      summary: Login
+      description: Autentica al usuario con email y password
+      operationId: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Servicio activo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+
 
 components:
   schemas:
