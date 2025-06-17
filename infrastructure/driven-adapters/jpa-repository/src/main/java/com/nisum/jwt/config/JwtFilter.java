@@ -24,13 +24,12 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
+import static com.nisum.jwt.config.TokenResources.*;
+
 @RequiredArgsConstructor
 public class JwtFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
-    private static final SecretKey SECRET_KEY = Jwts.SIG.HS256.key().build();
-    private static final String PREFIX_TOKEN = "Bearer ";
-    private static final String HEADER_AUTHORIZATION = "Authorization";
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
@@ -65,7 +64,7 @@ public class JwtFilter extends UsernamePasswordAuthenticationFilter {
         Collection<? extends GrantedAuthority> roles = authResult.getAuthorities();
 
         Claims claims = Jwts.claims()
-                .add("authorities", roles)
+                .add("role", new ObjectMapper().writeValueAsString(roles))
                 .add("username", username)
                 .build();
         String token = Jwts.builder()

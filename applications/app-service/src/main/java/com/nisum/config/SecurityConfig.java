@@ -2,6 +2,7 @@ package com.nisum.config;
 
 
 import com.nisum.jwt.config.JwtFilter;
+import com.nisum.jwt.config.JwtValidationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +35,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilter(new JwtFilter(authenticationManager()))
+                .addFilter(new JwtValidationFilter(authenticationManager()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
