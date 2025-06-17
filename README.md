@@ -39,4 +39,4 @@ cd nisum-java
 #### 2. Ejecuta el proyecto
 
 - El proyecto incluye el wrapper de Gradle (gradlew/gradlew.bat), así que **no necesitas instalar Gradle manualmente**.
-- Ejecuta aqui servicio (`gradle bootrun`)
+- Ejecuta aqui servicio (`./gradlew bootrun`)

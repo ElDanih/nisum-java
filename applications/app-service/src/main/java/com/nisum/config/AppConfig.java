@@ -1,5 +1,6 @@
 package com.nisum.config;
 
+import com.nisum.jpa.user.mapper.UserMapper;
 import com.nisum.jpa.user.repository.UserRepository;
 import com.nisum.jpa.user.service.UserService;
 import com.nisum.jwt.service.JwtService;
@@ -21,9 +22,8 @@ public class AppConfig {
     }
 
     @Bean
-    public RequestGateway requestGateway(UserRepository userRepository, PasswordEncoder passwordEncoder
-            , JwtService jwtService) {
-        return new UserService(userRepository, passwordEncoder, jwtService);
+    public RequestGateway requestGateway(UserRepository userRepository, UserMapper userMapper) {
+        return new UserService(userRepository, userMapper);
     }
 
     @Bean

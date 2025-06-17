@@ -11,21 +11,21 @@
       "type": "string",
         "minLength": 8,
       "format": "email",
-      "pattern": "^[A-Za-z0-9._+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+      "pattern": "{{email-pattern}}"
     },
     "password": {
       "type": "string",
-      "pattern": "^(?=.*[A-Z])(?=.*[0-9])[A-Za-z\\d]{8,}$"
+      "pattern": "{{password-pattern}}"
     },
     "phones": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["number", "citycode", "contrycode"],
+        "required": ["number", "cityCode", "contryCode"],
         "properties": {
           "number": { "type": "string" },
-          "citycode": { "type": "string" },
-          "contrycode": { "type": "string" }
+          "cityCode": { "type": "string" },
+          "contryCode": { "type": "string" }
         }
       }
     }

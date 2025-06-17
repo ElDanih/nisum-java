@@ -34,4 +34,6 @@ public class ApiRest {
         return ResponseEntity.ok(registerUseCase.register(request));
     }
 
+
+
 }

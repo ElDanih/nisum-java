@@ -15,7 +15,6 @@ import static org.mockito.Mockito.when;
 
 class JpaConfigTest {
 
-
     @Mock
     DataSource dataSource;
 
@@ -57,13 +56,4 @@ class JpaConfigTest {
 
         assertNotNull(result);
     }
-
-    /*@Test
-    void entityManagerFactoryTest() {
-
-        final LocalContainerEntityManagerFactoryBean result =
-                jpaConfigUnderTest.entityManagerFactory(dataSource, "dialect");
-
-        assertNotNull(result);
-    }*/
 }

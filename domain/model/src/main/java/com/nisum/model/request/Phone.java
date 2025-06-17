@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Phone {
     String number;
-    String citycode;
-    String contrycode;
+    String cityCode;
+    String contryCode;
 }

@@ -53,5 +53,7 @@ public class UserData {
     @PrePersist
     public void prePersist() {
         this.isActive = true;
+        this.role = Role.USER;
+        this.created = LocalDateTime.now();
     }
 }

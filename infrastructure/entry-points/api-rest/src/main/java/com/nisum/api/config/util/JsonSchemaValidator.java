@@ -7,9 +7,7 @@ import com.github.fge.jsonschema.main.JsonSchema;
 import com.nisum.model.exception.ErrorCode;
 import com.nisum.model.exception.RequestException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 @RequiredArgsConstructor
 public class JsonSchemaValidator {
 

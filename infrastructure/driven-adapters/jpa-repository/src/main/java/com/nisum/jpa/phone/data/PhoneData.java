@@ -17,8 +17,8 @@ public class PhoneData {
     @GeneratedValue
     private Long id;
     private String number;
-    private String citycode;
-    private String contrycode;
+    private String cityCode;
+    private String contryCode;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserData user;
